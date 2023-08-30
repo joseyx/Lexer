@@ -1,7 +1,7 @@
 # pylint: skip-file
 import ply.lex as lex
 
-# List of token names
+# Lista de nombres de los tokens
 tokens = [
     'INTEGER',
     'VARIABLE',
@@ -19,15 +19,15 @@ tokens = [
     'BREAK',
 ]
 
-# Regular expression rules for tokens
+# Expresiones regulares para los tokens
 t_INTEGER = r'\d+'
 
 def t_VARIABLE(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
-    t.type = reserved.get(t.value, 'VARIABLE')  # Check if it's a reserved word
+    t.type = reserved.get(t.value, 'VARIABLE')  # Verifica si es una palabra reservada
     return t
 
-# Reserved words
+# Palabras reservadas
 reserved = {
     'if': 'IF',
     'else': 'ELSE',
@@ -35,7 +35,7 @@ reserved = {
     'break': 'BREAK',
 }
 
-# Operator tokens
+# Tokens de operadores
 t_PLUS = r'\+'
 t_MINUS = r'-'
 t_MULTIPLY = r'\*'
@@ -45,19 +45,25 @@ t_RPAREN = r'\)'
 t_GREATER = r'>'
 t_EXPONENT = r'\^'
 
-# Ignored characters
+# Caracteres ignorados
 t_ignore = ' \t'
 
-# Error handling rule for invalid characters
+# Manejo de errores para caracteres invalidos
 def t_error(t):
     print("Invalid character: ", t.value[0])
     t.lexer.skip(1)
 
-# Build the lexer
+# Creacion del lexer
 lexer = lex.lex()
 
-# Example usage
-input_text = "if x > 5 + y * 2 ^ 3 break"
+# Funcion para leer el archivo de entrada
+def read_input_file(file_name):
+    with open(file_name, 'r') as file:
+        return file.read()
+
+# Ejemplo
+file_name = "programa.txt"
+input_text = read_input_file(file_name)
 lexer.input(input_text)
 
 for token in lexer:
